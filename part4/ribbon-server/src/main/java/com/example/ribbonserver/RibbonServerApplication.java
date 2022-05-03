@@ -30,7 +30,7 @@ public class RibbonServerApplication {
 	@Bean
 	public ServletRegistrationBean getServlet(){
 		HystrixMetricsStreamServlet streamServlet = new HystrixMetricsStreamServlet();
-		ServletRegistrationBean registrationBean = new ServletRegistrationBean(streamServlet);
+		ServletRegistrationBean registrationBean = new ServletRegistrationBean<>(streamServlet);
 		registrationBean.setLoadOnStartup(1);
 		registrationBean.addUrlMappings("/hystrix.stream");
 		registrationBean.setName("HystrixMetricsStreamServlet");
