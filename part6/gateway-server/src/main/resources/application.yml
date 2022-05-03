@@ -1,0 +1,33 @@
+server:
+  port: 10010
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+spring:
+  application:
+    name: eureka-gateway
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+      routes:
+        - id: eureka-feign-route
+          #uri: http://localhost:8787
+          uri: lb://eureka-feign
+          predicates:
+            - Path=/api-feign/**
+          filters: #如果路由中重新定义了path，需要增加StripPrefix
+            - StripPrefix=1
+
+        - id: eureka-ribbon-route
+          #uri: http://localhost:8777
+          uri: lb://eureka-ribbon
+          predicates:
+            - Path=/api-ribbon/**
+          filters:
+            - StripPrefix=1
+
+
+
